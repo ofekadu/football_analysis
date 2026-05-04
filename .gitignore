@@ -1,0 +1,38 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+env/
+venv/
+ENV/
+
+# AI/ML Models and Weights
+# Standard to ignore large .pt or .onnx files
+*.pt
+*.onnx
+models/
+
+# Project Specific Folders
+# Based on image_57ec44.png, these often contain large binaries or temporary data
+input_videos/
+output_videos/
+runs/
+stubs/
+training/
+
+# Data and Persistence
+*.pickle
+*.csv
+*.json
+!example.json  # Keep examples if necessary
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
