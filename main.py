@@ -10,9 +10,7 @@ def main():
 
     # Get object tracks
     tracker = Tracker("models/best.pt")
-    tracks = tracker.get_object_tracks(
-        video_frames, read_from_stub=True, stub_path="stubs/track_stubs.pkl"
-    )
+    tracks = tracker.get_object_tracks(video_frames)
 
     # Interpolate ball positions
     tracks["ball"] = tracker.interpolate_ball_positions(tracks["ball"])
