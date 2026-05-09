@@ -16,8 +16,15 @@ def main():
     tracks["ball"] = tracker.interpolate_ball_positions(tracks["ball"])
 
     # Assign player teams
+    # Use first 10 frames to build a robust color model — reduces bad first-frame assignments
     team_assigner = TeamAssigner()
-    team_assigner.assign_team_color(video_frames[0], tracks["players"][0])
+    CALIBRATION_FRAMES = 10
+    frame_player_pairs = [
+        (video_frames[i], tracks["players"][i])
+        for i in range(min(CALIBRATION_FRAMES, len(tracks["players"])))
+        if tracks["players"][i]  # skip empty frames
+    ]
+    team_assigner.assign_team_color(frame_player_pairs)
 
     for frame_num, player_track in enumerate(tracks["players"]):
         for player_id, track in player_track.items():
@@ -25,8 +32,8 @@ def main():
                 video_frames[frame_num], track["bbox"], player_id
             )
             tracks["players"][frame_num][player_id]["team"] = team
-            tracks["players"][frame_num][player_id]["team_color"] = (
-                team_assigner.team_colors[team]
+            tracks["players"][frame_num][player_id]["team_color"] = tuple(
+                int(c) for c in team_assigner.team_colors[team]
             )
 
     # Draw annotations
